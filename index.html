@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/DesaLuar_1.js"></script>
+        <script src="data/Sungai_2.js"></script>
+        <script src="data/Dusun_3.js"></script>
+        <script src="data/TutupanLahan_4.js"></script>
+        <script src="data/FasilitasUmum_5.js"></script>
+        <script src="data/Jalan_6.js"></script>
+        <script src="data/Sungai_7.js"></script>
+        <script src="data/BatasDesa_8.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-7.052391921564079,110.8275141636847],[-7.021139748979396,110.8744830100407]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/zectre" target="_blank">KKN Undip 2020 by zectre</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        function pop_DesaLuar_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDPPUM'] !== null ? Autolinker.link(feature.properties['KDPPUM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? Autolinker.link(feature.properties['NAMOBJ'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? Autolinker.link(feature.properties['REMARK'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDPBPS'] !== null ? Autolinker.link(feature.properties['KDPBPS'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? Autolinker.link(feature.properties['FCODE'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LUASWH'] !== null ? Autolinker.link(feature.properties['LUASWH'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UUPP'] !== null ? Autolinker.link(feature.properties['UUPP'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? Autolinker.link(feature.properties['SRS_ID'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LCODE'] !== null ? Autolinker.link(feature.properties['LCODE'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? Autolinker.link(feature.properties['METADATA'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDEBPS'] !== null ? Autolinker.link(feature.properties['KDEBPS'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDEPUM'] !== null ? Autolinker.link(feature.properties['KDEPUM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDCBPS'] !== null ? Autolinker.link(feature.properties['KDCBPS'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDCPUM'] !== null ? Autolinker.link(feature.properties['KDCPUM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDBBPS'] !== null ? Autolinker.link(feature.properties['KDBBPS'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDBPUM'] !== null ? Autolinker.link(feature.properties['KDBPUM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMKD'] !== null ? Autolinker.link(feature.properties['WADMKD'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WIADKD'] !== null ? Autolinker.link(feature.properties['WIADKD'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMKC'] !== null ? Autolinker.link(feature.properties['WADMKC'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WIADKC'] !== null ? Autolinker.link(feature.properties['WIADKC'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMKK'] !== null ? Autolinker.link(feature.properties['WADMKK'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WIADKK'] !== null ? Autolinker.link(feature.properties['WIADKK'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMPR'] !== null ? Autolinker.link(feature.properties['WADMPR'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WIADPR'] !== null ? Autolinker.link(feature.properties['WIADPR'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TIPADM'] !== null ? Autolinker.link(feature.properties['TIPADM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Leng'] !== null ? Autolinker.link(feature.properties['SHAPE_Leng'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? Autolinker.link(feature.properties['SHAPE_Area'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_DesaLuar_1_0() {
+            return {
+                pane: 'pane_DesaLuar_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_DesaLuar_1');
+        map.getPane('pane_DesaLuar_1').style.zIndex = 401;
+        map.getPane('pane_DesaLuar_1').style['mix-blend-mode'] = 'normal';
+        var layer_DesaLuar_1 = new L.geoJson(json_DesaLuar_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_DesaLuar_1',
+            layerName: 'layer_DesaLuar_1',
+            pane: 'pane_DesaLuar_1',
+            onEachFeature: pop_DesaLuar_1,
+            style: style_DesaLuar_1_0,
+        });
+        bounds_group.addLayer(layer_DesaLuar_1);
+        map.addLayer(layer_DesaLuar_1);
+        function pop_Sungai_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(feature.properties['id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kategori'] !== null ? Autolinker.link(feature.properties['Kategori'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Sungai_2_0() {
+            return {
+                pane: 'pane_Sungai_2',
+                opacity: 1,
+                color: 'rgba(0,112,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(69,121,181,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Sungai_2');
+        map.getPane('pane_Sungai_2').style.zIndex = 402;
+        map.getPane('pane_Sungai_2').style['mix-blend-mode'] = 'normal';
+        var layer_Sungai_2 = new L.geoJson(json_Sungai_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Sungai_2',
+            layerName: 'layer_Sungai_2',
+            pane: 'pane_Sungai_2',
+            onEachFeature: pop_Sungai_2,
+            style: style_Sungai_2_0,
+        });
+        bounds_group.addLayer(layer_Sungai_2);
+        map.addLayer(layer_Sungai_2);
+        function pop_Dusun_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(feature.properties['id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nama'] !== null ? Autolinker.link(feature.properties['Nama'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Dusun_3_0() {
+            return {
+                pane: 'pane_Dusun_3',
+                radius: 4.0,
+                stroke: false,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Dusun_3');
+        map.getPane('pane_Dusun_3').style.zIndex = 403;
+        map.getPane('pane_Dusun_3').style['mix-blend-mode'] = 'normal';
+        var layer_Dusun_3 = new L.geoJson(json_Dusun_3, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Dusun_3',
+            layerName: 'layer_Dusun_3',
+            pane: 'pane_Dusun_3',
+            onEachFeature: pop_Dusun_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Dusun_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Dusun_3);
+        map.addLayer(layer_Dusun_3);
+        function pop_TutupanLahan_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(feature.properties['id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TAMBAHAN'] !== null ? Autolinker.link(feature.properties['TAMBAHAN'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kategori'] !== null ? Autolinker.link(feature.properties['Kategori'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ScoreTtpan'] !== null ? Autolinker.link(feature.properties['ScoreTtpan'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['scorefixttpn'] !== null ? Autolinker.link(feature.properties['scorefixttpn'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_TutupanLahan_4_0(feature) {
+            switch(String(feature.properties['Kategori'])) {
+                case 'Perkebunan':
+                    return {
+                pane: 'pane_TutupanLahan_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(189,255,161,1.0)',
+                interactive: false,
+            }
+                    break;
+                case 'Permukiman':
+                    return {
+                pane: 'pane_TutupanLahan_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,176,133,1.0)',
+                interactive: false,
+            }
+                    break;
+                case 'Persawahan':
+                    return {
+                pane: 'pane_TutupanLahan_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(138,238,151,1.0)',
+                interactive: false,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_TutupanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(200,68,147,1.0)',
+                interactive: false,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_TutupanLahan_4');
+        map.getPane('pane_TutupanLahan_4').style.zIndex = 404;
+        map.getPane('pane_TutupanLahan_4').style['mix-blend-mode'] = 'normal';
+        var layer_TutupanLahan_4 = new L.geoJson(json_TutupanLahan_4, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_TutupanLahan_4',
+            layerName: 'layer_TutupanLahan_4',
+            pane: 'pane_TutupanLahan_4',
+            onEachFeature: pop_TutupanLahan_4,
+            style: style_TutupanLahan_4_0,
+        });
+        bounds_group.addLayer(layer_TutupanLahan_4);
+        map.addLayer(layer_TutupanLahan_4);
+        function pop_FasilitasUmum_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NAMA</th>\
+                        <td>' + (feature.properties['NAMA'] !== null ? Autolinker.link(feature.properties['NAMA'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Gambar</strong><br />' + (feature.properties['Gambar'] !== null ? Autolinker.link(feature.properties['Gambar'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_FasilitasUmum_5_0(feature) {
+            switch(String(feature.properties['q2wHide_Objek'])) {
+                case 'Kantor Desa':
+                    return {
+                pane: 'pane_FasilitasUmum_5',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(214,27,27,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Makam':
+                    return {
+                pane: 'pane_FasilitasUmum_5',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Masjid':
+                    return {
+                pane: 'pane_FasilitasUmum_5',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Sekolah':
+                    return {
+                pane: 'pane_FasilitasUmum_5',
+                radius: 6.4,
+                opacity: 1,
+                color: 'rgba(128,17,25,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(196,238,26,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Kesehatan':
+                    return {
+                pane: 'pane_FasilitasUmum_5',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(61,128,53,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(84,176,74,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_FasilitasUmum_5');
+        map.getPane('pane_FasilitasUmum_5').style.zIndex = 405;
+        map.getPane('pane_FasilitasUmum_5').style['mix-blend-mode'] = 'normal';
+        var layer_FasilitasUmum_5 = new L.geoJson(json_FasilitasUmum_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_FasilitasUmum_5',
+            layerName: 'layer_FasilitasUmum_5',
+            pane: 'pane_FasilitasUmum_5',
+            onEachFeature: pop_FasilitasUmum_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_FasilitasUmum_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_FasilitasUmum_5);
+        map.addLayer(layer_FasilitasUmum_5);
+        function pop_Jalan_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(feature.properties['id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jalan_6_0() {
+            return {
+                pane: 'pane_Jalan_6',
+                opacity: 1,
+                color: 'rgba(219,30,42,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Jalan_6');
+        map.getPane('pane_Jalan_6').style.zIndex = 406;
+        map.getPane('pane_Jalan_6').style['mix-blend-mode'] = 'normal';
+        var layer_Jalan_6 = new L.geoJson(json_Jalan_6, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Jalan_6',
+            layerName: 'layer_Jalan_6',
+            pane: 'pane_Jalan_6',
+            onEachFeature: pop_Jalan_6,
+            style: style_Jalan_6_0,
+        });
+        bounds_group.addLayer(layer_Jalan_6);
+        map.addLayer(layer_Jalan_6);
+        function pop_Sungai_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(feature.properties['id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Sungai_7_0() {
+            return {
+                pane: 'pane_Sungai_7',
+                opacity: 1,
+                color: 'rgba(69,121,181,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Sungai_7');
+        map.getPane('pane_Sungai_7').style.zIndex = 407;
+        map.getPane('pane_Sungai_7').style['mix-blend-mode'] = 'normal';
+        var layer_Sungai_7 = new L.geoJson(json_Sungai_7, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Sungai_7',
+            layerName: 'layer_Sungai_7',
+            pane: 'pane_Sungai_7',
+            onEachFeature: pop_Sungai_7,
+            style: style_Sungai_7_0,
+        });
+        bounds_group.addLayer(layer_Sungai_7);
+        map.addLayer(layer_Sungai_7);
+        function pop_BatasDesa_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDPPUM'] !== null ? Autolinker.link(feature.properties['KDPPUM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? Autolinker.link(feature.properties['NAMOBJ'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? Autolinker.link(feature.properties['REMARK'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDPBPS'] !== null ? Autolinker.link(feature.properties['KDPBPS'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? Autolinker.link(feature.properties['FCODE'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LUASWH'] !== null ? Autolinker.link(feature.properties['LUASWH'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UUPP'] !== null ? Autolinker.link(feature.properties['UUPP'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? Autolinker.link(feature.properties['SRS_ID'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LCODE'] !== null ? Autolinker.link(feature.properties['LCODE'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? Autolinker.link(feature.properties['METADATA'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDEBPS'] !== null ? Autolinker.link(feature.properties['KDEBPS'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDEPUM'] !== null ? Autolinker.link(feature.properties['KDEPUM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDCBPS'] !== null ? Autolinker.link(feature.properties['KDCBPS'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDCPUM'] !== null ? Autolinker.link(feature.properties['KDCPUM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDBBPS'] !== null ? Autolinker.link(feature.properties['KDBBPS'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KDBPUM'] !== null ? Autolinker.link(feature.properties['KDBPUM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMKD'] !== null ? Autolinker.link(feature.properties['WADMKD'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WIADKD'] !== null ? Autolinker.link(feature.properties['WIADKD'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMKC'] !== null ? Autolinker.link(feature.properties['WADMKC'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WIADKC'] !== null ? Autolinker.link(feature.properties['WIADKC'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMKK'] !== null ? Autolinker.link(feature.properties['WADMKK'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WIADKK'] !== null ? Autolinker.link(feature.properties['WIADKK'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMPR'] !== null ? Autolinker.link(feature.properties['WADMPR'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WIADPR'] !== null ? Autolinker.link(feature.properties['WIADPR'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TIPADM'] !== null ? Autolinker.link(feature.properties['TIPADM'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Leng'] !== null ? Autolinker.link(feature.properties['SHAPE_Leng'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? Autolinker.link(feature.properties['SHAPE_Area'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_BatasDesa_8_0() {
+            return {
+                pane: 'pane_BatasDesa_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_BatasDesa_8');
+        map.getPane('pane_BatasDesa_8').style.zIndex = 408;
+        map.getPane('pane_BatasDesa_8').style['mix-blend-mode'] = 'normal';
+        var layer_BatasDesa_8 = new L.geoJson(json_BatasDesa_8, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_BatasDesa_8',
+            layerName: 'layer_BatasDesa_8',
+            pane: 'pane_BatasDesa_8',
+            onEachFeature: pop_BatasDesa_8,
+            style: style_BatasDesa_8_0,
+        });
+        bounds_group.addLayer(layer_BatasDesa_8);
+        map.addLayer(layer_BatasDesa_8);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/BatasDesa_8.png" /> Batas Desa': layer_BatasDesa_8,'<img src="legend/Sungai_7.png" /> Sungai': layer_Sungai_7,'<img src="legend/Jalan_6.png" /> Jalan': layer_Jalan_6,'Fasilitas Umum<br /><table><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_5_KantorDesa0.png" /></td><td>Kantor Desa</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_5_Makam1.png" /></td><td>Makam</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_5_Masjid2.png" /></td><td>Masjid</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_5_Sekolah3.png" /></td><td>Sekolah</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_5_Kesehatan4.png" /></td><td>Kesehatan</td></tr></table>': layer_FasilitasUmum_5,'Tutupan Lahan<br /><table><tr><td style="text-align: center;"><img src="legend/TutupanLahan_4_Perkebunan0.png" /></td><td>Perkebunan</td></tr><tr><td style="text-align: center;"><img src="legend/TutupanLahan_4_Permukiman1.png" /></td><td>Permukiman</td></tr><tr><td style="text-align: center;"><img src="legend/TutupanLahan_4_Persawahan2.png" /></td><td>Persawahan</td></tr><tr><td style="text-align: center;"><img src="legend/TutupanLahan_4_3.png" /></td><td></td></tr></table>': layer_TutupanLahan_4,'<img src="legend/Dusun_3.png" /> Dusun': layer_Dusun_3,'<img src="legend/Sungai_2.png" /> Sungai': layer_Sungai_2,'<img src="legend/DesaLuar_1.png" /> Desa Luar': layer_DesaLuar_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_DesaLuar_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAMOBJ'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'Ubuntu\', sans-serif;">' + layer.feature.properties['NAMOBJ']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_DesaLuar_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_Dusun_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Nama'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'Ubuntu\', sans-serif;">' + layer.feature.properties['Nama']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Dusun_3'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_FasilitasUmum_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #f3efef; font-size: 10pt; font-family: \'Ubuntu\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_FasilitasUmum_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_DesaLuar_1,layer_Dusun_3,layer_FasilitasUmum_5]);
+        map.on("zoomend", function(){
+            resetLabels([layer_DesaLuar_1,layer_Dusun_3,layer_FasilitasUmum_5]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_DesaLuar_1,layer_Dusun_3,layer_FasilitasUmum_5]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_DesaLuar_1,layer_Dusun_3,layer_FasilitasUmum_5]);
+        });
+        </script>
+    </body>
+</html>
